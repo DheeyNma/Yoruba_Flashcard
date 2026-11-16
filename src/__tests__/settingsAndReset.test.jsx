@@ -110,3 +110,4 @@ describe('Settings, Storage Disclaimer, and Confirmed Reset', () => {
     expect(currentDir).toBe('english-to-yoruba');
   });
 });
+

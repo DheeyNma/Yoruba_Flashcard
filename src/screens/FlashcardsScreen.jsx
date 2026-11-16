@@ -19,6 +19,7 @@ export default function FlashcardsScreen({
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialCardIndex);
+  const [isCompleted, setIsCompleted] = useState(false);
   const [ratings, setRatings] = useState(() => getRatings());
   const [audioFeedback, setAudioFeedback] = useState('');
 
@@ -62,6 +63,9 @@ export default function FlashcardsScreen({
   const handleNext = () => {
     if (safeIndex < words.length - 1) {
       goToCard(safeIndex + 1);
+    } else {
+      // Reached the end of the category
+      setIsCompleted(true);
     }
   };
 
@@ -102,16 +106,19 @@ export default function FlashcardsScreen({
 
     if (safeIndex < words.length - 1) {
       goToCard(safeIndex + 1);
+    } else {
+      // Reached the end of the category
+      setIsCompleted(true);
     }
   };
 
   const handlePlayAudio = (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Never flip card when clicking audio
     if (!activeWord) return;
 
     if (!soundEnabled) {
-      setAudioFeedback('Audio is turned off in Settings');
-      setTimeout(() => setAudioFeedback(''), 3000);
+      setAudioFeedback('Audio is turned off in Settings.');
+      setTimeout(() => setAudioFeedback(''), 4000);
       return;
     }
 
@@ -119,14 +126,14 @@ export default function FlashcardsScreen({
       try {
         const audio = new Audio(activeWord.audioUrl);
         audio.play().catch(() => {
-          setAudioFeedback('Audio playback error');
+          setAudioFeedback('Audio playback error.');
         });
       } catch {
-        setAudioFeedback('Audio could not be loaded');
+        setAudioFeedback('Audio could not be loaded.');
       }
     } else {
-      setAudioFeedback('Audio is awaiting verified native speaker recording');
-      setTimeout(() => setAudioFeedback(''), 3000);
+      setAudioFeedback('Audio awaiting native speaker recording. Generic robot text-to-speech is disabled to protect authentic Yoruba tones.');
+      setTimeout(() => setAudioFeedback(''), 5000);
     }
   };
 
@@ -150,6 +157,85 @@ export default function FlashcardsScreen({
           >
             Browse Categories
           </button>
+        </div>
+      </section>
+    );
+  }
+
+  /* ================= CATEGORY COMPLETED VIEW ================= */
+  if (isCompleted) {
+    const knownInSet = words.filter((w) => ratings[w.id] === 'known').length;
+    const againInSet = words.filter((w) => ratings[w.id] === 'again').length;
+
+    return (
+      <section className="screen-container" aria-labelledby="completion-title">
+        <header className="screen-header">
+          <h1 id="completion-title" className="screen-title">
+            Ẹ kú iṣẹ́! (Well done!)
+          </h1>
+          <p className="screen-subtitle">
+            You've completed all cards in{' '}
+            <strong style={{ textTransform: 'capitalize' }}>
+              {selectedCategory || 'this set'}
+            </strong>.
+          </p>
+        </header>
+
+        <div className="card" style={{ textAlign: 'center', padding: 'var(--spacing-lg)' }}>
+          <span style={{ fontSize: '3rem' }}>🎉</span>
+          <h2 style={{ fontSize: '1.25rem', marginTop: '0.5rem' }}>Set Completed</h2>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
+            All {words.length} flashcards have been reviewed.
+          </p>
+
+          <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.25rem', marginBottom: '1.5rem' }}>
+            <div style={{ flex: 1, padding: '0.75rem', backgroundColor: 'var(--color-primary-light)', borderRadius: 'var(--radius-md)' }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-primary)' }}>
+                {knownInSet}
+              </div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
+                Known
+              </div>
+            </div>
+            <div style={{ flex: 1, padding: '0.75rem', backgroundColor: '#fbeae8', borderRadius: 'var(--radius-md)' }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#c0392b' }}>
+                {againInSet}
+              </div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
+                To Review
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            <button
+              type="button"
+              className="primary-button"
+              onClick={() => {
+                setIsCompleted(false);
+                goToCard(0);
+              }}
+              style={{ width: '100%' }}
+            >
+              Study Again from Card 1 ↻
+            </button>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => onNavigate('practice')}
+              style={{ width: '100%' }}
+            >
+              Take Practice Quiz ✏️
+            </button>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => onNavigate('learn')}
+              style={{ width: '100%' }}
+            >
+              Browse Other Categories 📚
+            </button>
+          </div>
         </div>
       </section>
     );
@@ -261,7 +347,6 @@ export default function FlashcardsScreen({
                   <button
                     type="button"
                     className="audio-button"
-                    disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
                     aria-disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
                     onClick={handlePlayAudio}
                     title={
@@ -301,7 +386,6 @@ export default function FlashcardsScreen({
                   <button
                     type="button"
                     className="audio-button"
-                    disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
                     aria-disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
                     onClick={handlePlayAudio}
                   >
@@ -339,8 +423,19 @@ export default function FlashcardsScreen({
       </div>
 
       {audioFeedback && (
-        <div role="status" style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textAlign: 'center' }}>
-          {audioFeedback}
+        <div
+          role="status"
+          style={{
+            fontSize: '0.85rem',
+            color: 'var(--color-text)',
+            backgroundColor: 'var(--color-gold-light)',
+            padding: '0.5rem 0.75rem',
+            borderRadius: 'var(--radius-md)',
+            textAlign: 'center',
+            border: '1px solid var(--color-gold)',
+          }}
+        >
+          ℹ️ {audioFeedback}
         </div>
       )}
 
@@ -380,11 +475,10 @@ export default function FlashcardsScreen({
           type="button"
           className="secondary-button"
           onClick={handleNext}
-          disabled={safeIndex === words.length - 1}
-          aria-label="Next flashcard"
-          style={{ flex: 1, opacity: safeIndex === words.length - 1 ? 0.4 : 1, cursor: safeIndex === words.length - 1 ? 'not-allowed' : 'pointer' }}
+          aria-label={safeIndex === words.length - 1 ? 'Finish category' : 'Next flashcard'}
+          style={{ flex: 1 }}
         >
-          Next →
+          {safeIndex === words.length - 1 ? 'Finish Set 🎉' : 'Next →'}
         </button>
       </div>
     </section>

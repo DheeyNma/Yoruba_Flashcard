@@ -74,3 +74,4 @@ Before deploying:
 - [x] Production build passes without errors (`npm run build`).
 - [x] Responsive layout verified on mobile screens.
 - [x] Yoruba special characters and tone marks render without clipping.
+

@@ -109,10 +109,13 @@ describe('Interactive Flashcards Screen', () => {
     // Written pronunciation guide
     expect(screen.getByText(/BAH-woh nee/i)).toBeInTheDocument();
 
-    // Audio button should be disabled because audio is awaiting native recording
+    // Audio button should indicate honest disabled state
     const audioBtn = screen.getByRole('button', { name: /Audio: Awaiting recording/i });
-    expect(audioBtn).toBeDisabled();
     expect(audioBtn).toHaveAttribute('aria-disabled', 'true');
+
+    // Clicking the audio button should show the honest native speaker notice
+    fireEvent.click(audioBtn);
+    expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
   it('updates ratings when clicking "I know this" and "Learn again"', () => {
@@ -160,3 +163,28 @@ describe('Interactive Flashcards Screen', () => {
   });
 });
 
+
+
+  it('displays category completion screen when rating the final card in a set', () => {
+    render(
+      <FlashcardsScreen
+        selectedCategory="household" // Household has 2 words: Ilé and Ìlẹ̀kùn
+        selectedLevel="intermediate"
+        cardDirection="yoruba-to-english"
+        onNavigate={() => {}}
+      />
+    );
+
+    // Card 1
+    expect(screen.getByText(/Card 1 of 2/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /Mark as known: I know this/i }));
+
+    // Card 2 (Last card)
+    expect(screen.getByText(/Card 2 of 2/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /Mark as known: I know this/i }));
+
+    // Should now show Category Completed view
+    expect(screen.getByRole('heading', { name: /Ẹ kú iṣẹ́!/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Study Again from Card 1/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Take Practice Quiz/i })).toBeInTheDocument();
+  });
