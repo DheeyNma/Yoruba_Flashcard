@@ -1,0 +1,362 @@
+[
+  {
+    "id": "beg-greet-001",
+    "level": "beginner",
+    "category": "greetings",
+    "yoruba": "Báwo ni",
+    "english": "Hello / How are things?",
+    "pronunciation": "BAH-woh nee",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Báwo ni nǹkan?",
+      "english": "How are things going?"
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-greet-002",
+    "level": "beginner",
+    "category": "greetings",
+    "yoruba": "Ẹ káàsán",
+    "english": "Good afternoon",
+    "pronunciation": "Eh KAH-ah-SAHN",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ẹ káàsán, màmá.",
+      "english": "Good afternoon, mother."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-greet-003",
+    "level": "beginner",
+    "category": "greetings",
+    "yoruba": "Ẹ káàárọ̀",
+    "english": "Good morning",
+    "pronunciation": "Eh KAH-ah-RAW",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ẹ káàárọ̀, bàbá.",
+      "english": "Good morning, father."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-greet-004",
+    "level": "beginner",
+    "category": "greetings",
+    "yoruba": "Ó dàbọ̀",
+    "english": "Goodbye",
+    "pronunciation": "OH DAH-baw",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ó dàbọ̀, màá rí ẹ láìpẹ́.",
+      "english": "Goodbye, I will see you soon."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-greet-005",
+    "level": "beginner",
+    "category": "greetings",
+    "yoruba": "Ẹ ṣeun",
+    "english": "Thank you",
+    "pronunciation": "Eh SHEH-oon",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ẹ ṣeun púpọ̀.",
+      "english": "Thank you very much."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-num-001",
+    "level": "beginner",
+    "category": "numbers",
+    "yoruba": "Oókan",
+    "english": "One",
+    "pronunciation": "OH-oh-kahn",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Mo fẹ́ ẹyọ kan ṣoṣo.",
+      "english": "I want just one."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-num-002",
+    "level": "beginner",
+    "category": "numbers",
+    "yoruba": "Èjì",
+    "english": "Two",
+    "pronunciation": "EH-jee",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Àwọn ọmọ méjì wà níbẹ̀.",
+      "english": "There are two children there."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-num-003",
+    "level": "beginner",
+    "category": "numbers",
+    "yoruba": "Ẹ̀ta",
+    "english": "Three",
+    "pronunciation": "EH-tah",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Mo ní ìwé mẹ́ta.",
+      "english": "I have three books."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-fam-001",
+    "level": "beginner",
+    "category": "family",
+    "yoruba": "Bàbá",
+    "english": "Father",
+    "pronunciation": "Bah-BAH",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Bàbá mi ń ṣiṣẹ́.",
+      "english": "My father is working."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-fam-002",
+    "level": "beginner",
+    "category": "family",
+    "yoruba": "Màmá",
+    "english": "Mother",
+    "pronunciation": "Mah-MAH",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Màmá mi ń dáná.",
+      "english": "My mother is cooking."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-fam-003",
+    "level": "beginner",
+    "category": "family",
+    "yoruba": "Ọmọ",
+    "english": "Child / Offspring",
+    "pronunciation": "Aw-MAW",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ọmọ náà ń sunkún.",
+      "english": "The child is crying."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-food-001",
+    "level": "beginner",
+    "category": "food",
+    "yoruba": "Omi",
+    "english": "Water",
+    "pronunciation": "Oh-MEE",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Mo fẹ́ mu omi tútù.",
+      "english": "I want to drink cold water."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "beg-food-002",
+    "level": "beginner",
+    "category": "food",
+    "yoruba": "Oúnjẹ",
+    "english": "Food",
+    "pronunciation": "Oh-OON-jeh",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Oúnjẹ yìí dùn gan-an.",
+      "english": "This food is very sweet/delicious."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "int-home-001",
+    "level": "intermediate",
+    "category": "household",
+    "yoruba": "Ilé",
+    "english": "House / Home",
+    "pronunciation": "Ee-LEH",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Mo wà ní ilé.",
+      "english": "I am at home."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "int-home-002",
+    "level": "intermediate",
+    "category": "household",
+    "yoruba": "Ìlẹ̀kùn",
+    "english": "Door",
+    "pronunciation": "Ee-LEH-koon",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ti ìlẹ̀kùn náà pa.",
+      "english": "Close the door."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "int-act-001",
+    "level": "intermediate",
+    "category": "actions",
+    "yoruba": "Sọ̀rọ̀",
+    "english": "To speak / To talk",
+    "pronunciation": "Saw-RAW",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Sọ̀rọ̀ jẹ́jẹ́.",
+      "english": "Speak gently."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "int-act-002",
+    "level": "intermediate",
+    "category": "actions",
+    "yoruba": "Kàwé",
+    "english": "To read / To study",
+    "pronunciation": "Kah-WEH",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ó fẹ́ kàwé ní alẹ́ yìí.",
+      "english": "He wants to study this night."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "int-act-003",
+    "level": "intermediate",
+    "category": "actions",
+    "yoruba": "Jẹun",
+    "english": "To eat",
+    "pronunciation": "Jeh-OON",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Wá jẹun pẹ̀lú wa.",
+      "english": "Come eat with us."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "int-trans-001",
+    "level": "intermediate",
+    "category": "transportation",
+    "yoruba": "Ọkọ̀",
+    "english": "Vehicle / Car",
+    "pronunciation": "Aw-KAW",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ọkọ̀ náà yára gan-an.",
+      "english": "The car is very fast."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "adv-cul-001",
+    "level": "advanced",
+    "category": "culture",
+    "yoruba": "Àṣà",
+    "english": "Tradition / Culture",
+    "pronunciation": "Ah-SHAH",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Àṣà Yorùbá dára púpọ̀.",
+      "english": "Yoruba culture is very rich."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "adv-cul-002",
+    "level": "advanced",
+    "category": "culture",
+    "yoruba": "Ìtàn",
+    "english": "History / Story",
+    "pronunciation": "Ee-TAHN",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ìtàn yìí ní ẹ̀kọ́ nínú.",
+      "english": "This story has a moral lesson inside."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "adv-emo-001",
+    "level": "advanced",
+    "category": "emotions",
+    "yoruba": "Ìdùnnú",
+    "english": "Happiness / Joy",
+    "pronunciation": "Ee-doon-NOO",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Inú mi kún fún ìdùnnú.",
+      "english": "My heart is full of joy."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "adv-emo-002",
+    "level": "advanced",
+    "category": "emotions",
+    "yoruba": "Ìfẹ́",
+    "english": "Love",
+    "pronunciation": "Ee-FEH",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Ìfẹ́ ló ṣe pàtàkì jù.",
+      "english": "Love is what matters most."
+    },
+    "reviewStatus": "sample_verified"
+  },
+  {
+    "id": "adv-exp-001",
+    "level": "advanced",
+    "category": "expressions",
+    "yoruba": "Àkókò",
+    "english": "Time / Season",
+    "pronunciation": "Ah-KOH-koh",
+    "audioUrl": null,
+    "audioStatus": "unrecorded",
+    "exampleSentence": {
+      "yoruba": "Àkókò ń lọ kíákíá.",
+      "english": "Time is moving quickly."
+    },
+    "reviewStatus": "sample_verified"
+  }
+]

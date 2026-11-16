@@ -1,0 +1,384 @@
+@import './tokens.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* App shell & responsive layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+}
+
+.app-header {
+  height: var(--header-height);
+  background-color: var(--color-card);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-md);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.app-header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.app-header-title .tagline {
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.icon-button {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  gap: var(--spacing-xs);
+}
+
+.icon-button:hover {
+  background-color: var(--color-primary-light);
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  /* Space for fixed bottom navigation on mobile */
+  padding-bottom: calc(var(--nav-height-mobile) + var(--spacing-md));
+}
+
+@media (min-width: 641px) {
+  .app-main {
+    padding-bottom: var(--spacing-xl);
+  }
+}
+
+/* Navigation bar */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height-mobile);
+  background-color: var(--color-card);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 30;
+  padding: 0 var(--spacing-xs);
+}
+
+@media (min-width: 641px) {
+  /* On desktop, keep nav clear and centered or docked */
+  .bottom-nav {
+    max-width: var(--max-content-width);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 100%;
+  padding: var(--spacing-xs) 0;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-item:hover {
+  color: var(--color-primary);
+  background-color: transparent;
+}
+
+.nav-item.active {
+  color: var(--color-primary);
+}
+
+.nav-item-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.nav-item-indicator {
+  width: 16px;
+  height: 3px;
+  background-color: var(--color-gold);
+  border-radius: var(--radius-full);
+  margin-top: 2px;
+}
+
+/* Reusable UI cards and empty states */
+.screen-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.screen-header {
+  margin-bottom: var(--spacing-xs);
+}
+
+.screen-title {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+}
+
+.screen-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-top: var(--spacing-xs);
+}
+
+.card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl) var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.empty-state-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.empty-state-title {
+  font-size: 1.15rem;
+  color: var(--color-text);
+}
+
+.empty-state-text {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  max-width: 380px;
+}
+
+.primary-button {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.primary-button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.secondary-button {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+}
+
+.secondary-button:hover {
+  background-color: #d8e5dc;
+}
+
+.gold-badge {
+  display: inline-block;
+  background-color: var(--color-gold-light);
+  color: #7b5808;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+
+
+/* Flashcard interactive styles */
+.flashcard-card {
+  background-color: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+
+.flashcard-card:focus-visible {
+  outline: 3px solid var(--color-gold);
+  border-color: var(--color-primary);
+}
+
+.flashcard-card:hover {
+  border-color: var(--color-primary);
+}
+
+.flashcard-word {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-top: 1rem;
+  word-break: break-word;
+}
+
+.flashcard-pronunciation {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.audio-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-full);
+  margin-top: 0.75rem;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.audio-button:disabled {
+  background-color: #f0ede6;
+  color: #8c8880;
+  cursor: not-allowed;
+  border: 1px dashed #d5d0c7;
+}
+
+.recall-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.recall-button-again {
+  flex: 1;
+  background-color: #fbeae8;
+  color: #c0392b;
+  border: 1px solid #f1c5c0;
+  font-weight: 700;
+  padding: 0.75rem;
+}
+
+.recall-button-again:hover {
+  background-color: #f7d5d2;
+}
+
+.recall-button-known {
+  flex: 1;
+  background-color: #e7efe9;
+  color: var(--color-primary);
+  border: 1px solid #c2d9cb;
+  font-weight: 700;
+  padding: 0.75rem;
+}
+
+.recall-button-known:hover {
+  background-color: #d6e7dc;
+}
