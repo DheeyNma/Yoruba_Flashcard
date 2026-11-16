@@ -97,7 +97,7 @@ describe('Interactive Flashcards Screen', () => {
     expect(screen.queryByText('Báwo ni')).not.toBeInTheDocument();
   });
 
-  it('displays written pronunciation guide and shows honest disabled audio state', () => {
+  it('displays written pronunciation guide and plays pronunciation audio', () => {
     render(
       <FlashcardsScreen
         selectedCategory="greetings"
@@ -109,11 +109,11 @@ describe('Interactive Flashcards Screen', () => {
     // Written pronunciation guide
     expect(screen.getByText(/BAH-woh nee/i)).toBeInTheDocument();
 
-    // Audio button should indicate honest disabled state
-    const audioBtn = screen.getByRole('button', { name: /Audio: Awaiting recording/i });
-    expect(audioBtn).toHaveAttribute('aria-disabled', 'true');
+    // Audio button should be available and playable
+    const audioBtn = screen.getByRole('button', { name: /Pronounce Báwo ni/i });
+    expect(audioBtn).toBeInTheDocument();
 
-    // Clicking the audio button should show the honest native speaker notice
+    // Clicking the audio button should trigger speech
     fireEvent.click(audioBtn);
     expect(screen.getByRole('status')).toBeInTheDocument();
   });

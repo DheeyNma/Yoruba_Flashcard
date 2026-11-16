@@ -20,10 +20,27 @@ Object.defineProperty(globalThis, 'localStorage', {
   configurable: true,
   writable: true,
 });
+
 if (typeof window !== 'undefined') {
   Object.defineProperty(window, 'localStorage', {
     value: localStorageMock,
     configurable: true,
     writable: true,
   });
+
+  // Mock Web Speech API for Vitest
+  window.SpeechSynthesisUtterance = class {
+    constructor(text) {
+      this.text = text;
+      this.lang = 'yo-NG';
+      this.rate = 1;
+      this.pitch = 1;
+    }
+  };
+
+  window.speechSynthesis = {
+    speak: () => {},
+    cancel: () => {},
+    getVoices: () => [],
+  };
 }

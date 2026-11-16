@@ -6,6 +6,7 @@ import {
   markWordStudied,
   saveLastLesson,
 } from '../utils/storage';
+import { speakWord } from '../utils/speech';
 
 export default function FlashcardsScreen({
   selectedCategory,
@@ -64,7 +65,6 @@ export default function FlashcardsScreen({
     if (safeIndex < words.length - 1) {
       goToCard(safeIndex + 1);
     } else {
-      // Reached the end of the category
       setIsCompleted(true);
     }
   };
@@ -107,7 +107,6 @@ export default function FlashcardsScreen({
     if (safeIndex < words.length - 1) {
       goToCard(safeIndex + 1);
     } else {
-      // Reached the end of the category
       setIsCompleted(true);
     }
   };
@@ -118,22 +117,33 @@ export default function FlashcardsScreen({
 
     if (!soundEnabled) {
       setAudioFeedback('Audio is turned off in Settings.');
-      setTimeout(() => setAudioFeedback(''), 4000);
+      setTimeout(() => setAudioFeedback(''), 3000);
       return;
     }
 
+    // If verified recorded clip exists, play it
     if (activeWord.audioUrl && activeWord.audioStatus === 'verified') {
       try {
         const audio = new Audio(activeWord.audioUrl);
         audio.play().catch(() => {
-          setAudioFeedback('Audio playback error.');
+          speakWord(activeWord.yoruba);
         });
+        setAudioFeedback('🔊 Playing pronunciation');
+        setTimeout(() => setAudioFeedback(''), 3000);
+        return;
       } catch {
-        setAudioFeedback('Audio could not be loaded.');
+        // Fallback to speech synthesis
       }
+    }
+
+    // Pronounce with computer-generated voice
+    const res = speakWord(activeWord.yoruba);
+    if (res.success) {
+      setAudioFeedback('🔊 Playing pronunciation');
+      setTimeout(() => setAudioFeedback(''), 3000);
     } else {
-      setAudioFeedback('Audio awaiting native speaker recording. Generic robot text-to-speech is disabled to protect authentic Yoruba tones.');
-      setTimeout(() => setAudioFeedback(''), 5000);
+      setAudioFeedback(res.message);
+      setTimeout(() => setAudioFeedback(''), 3000);
     }
   };
 
@@ -347,24 +357,12 @@ export default function FlashcardsScreen({
                   <button
                     type="button"
                     className="audio-button"
-                    aria-disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
                     onClick={handlePlayAudio}
-                    title={
-                      !soundEnabled
-                        ? 'Audio is disabled in Settings'
-                        : activeWord.audioStatus === 'verified'
-                        ? 'Play verified pronunciation'
-                        : 'Audio clip awaiting native speaker recording'
-                    }
+                    aria-label={`Pronounce ${activeWord.yoruba}`}
+                    title="Play pronunciation"
                   >
-                    <span aria-hidden="true">🔈</span>
-                    <span>
-                      {!soundEnabled
-                        ? 'Audio: Disabled in settings'
-                        : activeWord.audioStatus === 'verified'
-                        ? 'Play Pronunciation'
-                        : 'Audio: Awaiting recording'}
-                    </span>
+                    <span aria-hidden="true">🔊</span>
+                    <span>Play Pronunciation</span>
                   </button>
                 </>
               )}
@@ -386,17 +384,12 @@ export default function FlashcardsScreen({
                   <button
                     type="button"
                     className="audio-button"
-                    aria-disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
                     onClick={handlePlayAudio}
+                    aria-label={`Pronounce ${activeWord.yoruba}`}
+                    title="Play pronunciation"
                   >
-                    <span aria-hidden="true">🔈</span>
-                    <span>
-                      {!soundEnabled
-                        ? 'Audio: Disabled in settings'
-                        : activeWord.audioStatus === 'verified'
-                        ? 'Play Pronunciation'
-                        : 'Audio: Awaiting recording'}
-                    </span>
+                    <span aria-hidden="true">🔊</span>
+                    <span>Play Pronunciation</span>
                   </button>
                 </>
               )}
@@ -428,14 +421,14 @@ export default function FlashcardsScreen({
           style={{
             fontSize: '0.85rem',
             color: 'var(--color-text)',
-            backgroundColor: 'var(--color-gold-light)',
+            backgroundColor: 'var(--color-primary-light)',
             padding: '0.5rem 0.75rem',
             borderRadius: 'var(--radius-md)',
             textAlign: 'center',
-            border: '1px solid var(--color-gold)',
+            border: '1px solid var(--color-border)',
           }}
         >
-          ℹ️ {audioFeedback}
+          {audioFeedback}
         </div>
       )}
 

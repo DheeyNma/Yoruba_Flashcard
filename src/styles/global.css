@@ -335,20 +335,20 @@ a:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.85rem;
-  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  padding: 0.45rem 1rem;
   border-radius: var(--radius-full);
   margin-top: 0.75rem;
   background-color: var(--color-primary-light);
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #c2d9cb;
+  box-shadow: var(--shadow-sm);
 }
 
-.audio-button:disabled {
-  background-color: #f0ede6;
-  color: #8c8880;
-  cursor: not-allowed;
-  border: 1px dashed #d5d0c7;
+.audio-button:hover {
+  background-color: #d6e7dc;
 }
 
 .recall-actions {
