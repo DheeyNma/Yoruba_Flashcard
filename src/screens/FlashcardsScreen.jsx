@@ -10,8 +10,10 @@ import {
 export default function FlashcardsScreen({
   selectedCategory,
   selectedLevel = 'beginner',
+  targetWordIds = null,
   cardDirection = 'yoruba-to-english',
   onUpdateCardDirection,
+  soundEnabled = true,
   initialCardIndex = 0,
   onNavigate,
 }) {
@@ -20,8 +22,11 @@ export default function FlashcardsScreen({
   const [ratings, setRatings] = useState(() => getRatings());
   const [audioFeedback, setAudioFeedback] = useState('');
 
-  // Filter words for the selected level and category
+  // Filter words: either by targetWordIds (custom review pool) or by selected level/category
   const words = sampleVocabulary.filter((w) => {
+    if (Array.isArray(targetWordIds) && targetWordIds.length > 0) {
+      return targetWordIds.includes(w.id);
+    }
     const matchesLevel = !selectedLevel || w.level === selectedLevel;
     const matchesCategory = !selectedCategory || w.category === selectedCategory;
     return matchesLevel && matchesCategory;
@@ -31,16 +36,16 @@ export default function FlashcardsScreen({
   const safeIndex = words.length > 0 ? Math.min(currentIndex, words.length - 1) : 0;
   const activeWord = words[safeIndex];
 
-  // Save last lesson location whenever location or card index changes
+  // Save last lesson location whenever location or card index changes (unless in custom review mode)
   useEffect(() => {
-    if (activeWord) {
+    if (activeWord && !targetWordIds) {
       saveLastLesson({
         level: selectedLevel,
         category: selectedCategory || activeWord.category,
         cardIndex: safeIndex,
       });
     }
-  }, [selectedLevel, selectedCategory, safeIndex, activeWord]);
+  }, [selectedLevel, selectedCategory, safeIndex, activeWord, targetWordIds]);
 
   // Mark word as studied when card is flipped to reveal answer
   useEffect(() => {
@@ -49,7 +54,6 @@ export default function FlashcardsScreen({
     }
   }, [isFlipped, activeWord]);
 
-  // Reset flip state when card changes
   const goToCard = (newIndex) => {
     setIsFlipped(false);
     setCurrentIndex(newIndex);
@@ -96,7 +100,6 @@ export default function FlashcardsScreen({
     markWordStudied(activeWord.id);
     setRatings(getRatings());
 
-    // Automatically suggest moving to next card if not at end
     if (safeIndex < words.length - 1) {
       goToCard(safeIndex + 1);
     }
@@ -106,10 +109,16 @@ export default function FlashcardsScreen({
     e.stopPropagation();
     if (!activeWord) return;
 
+    if (!soundEnabled) {
+      setAudioFeedback('Audio is turned off in Settings');
+      setTimeout(() => setAudioFeedback(''), 3000);
+      return;
+    }
+
     if (activeWord.audioUrl && activeWord.audioStatus === 'verified') {
       try {
         const audio = new Audio(activeWord.audioUrl);
-        audio.play().catch((err) => {
+        audio.play().catch(() => {
           setAudioFeedback('Audio playback error');
         });
       } catch {
@@ -129,9 +138,9 @@ export default function FlashcardsScreen({
         </header>
         <div className="card empty-state">
           <span className="empty-state-icon" aria-hidden="true">📂</span>
-          <h2 className="empty-state-title">No vocabulary found</h2>
+          <h2 className="empty-state-title">No vocabulary selected</h2>
           <p className="empty-state-text">
-            No words found for category "{selectedCategory}" in level "{selectedLevel}".
+            Choose a category from the Learn screen to begin studying flashcards.
           </p>
           <button
             type="button"
@@ -154,14 +163,16 @@ export default function FlashcardsScreen({
       <header className="screen-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h1 id="flashcards-title" className="screen-title" style={{ fontSize: '1.35rem' }}>
-            {selectedCategory ? (
+            {targetWordIds ? (
+              'Review Pool'
+            ) : selectedCategory ? (
               <span style={{ textTransform: 'capitalize' }}>{selectedCategory}</span>
             ) : (
               'All Flashcards'
             )}
           </h1>
           <p className="screen-subtitle" style={{ textTransform: 'capitalize' }}>
-            {selectedLevel} Level
+            {targetWordIds ? 'Custom Review' : `${selectedLevel} Level`}
           </p>
         </div>
         <button
@@ -250,18 +261,22 @@ export default function FlashcardsScreen({
                   <button
                     type="button"
                     className="audio-button"
-                    disabled={!activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
-                    aria-disabled={!activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
+                    disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
+                    aria-disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
                     onClick={handlePlayAudio}
                     title={
-                      activeWord.audioStatus === 'verified'
+                      !soundEnabled
+                        ? 'Audio is disabled in Settings'
+                        : activeWord.audioStatus === 'verified'
                         ? 'Play verified pronunciation'
                         : 'Audio clip awaiting native speaker recording'
                     }
                   >
                     <span aria-hidden="true">🔈</span>
                     <span>
-                      {activeWord.audioStatus === 'verified'
+                      {!soundEnabled
+                        ? 'Audio: Disabled in settings'
+                        : activeWord.audioStatus === 'verified'
                         ? 'Play Pronunciation'
                         : 'Audio: Awaiting recording'}
                     </span>
@@ -286,13 +301,15 @@ export default function FlashcardsScreen({
                   <button
                     type="button"
                     className="audio-button"
-                    disabled={!activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
-                    aria-disabled={!activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
+                    disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
+                    aria-disabled={!soundEnabled || !activeWord.audioUrl || activeWord.audioStatus !== 'verified'}
                     onClick={handlePlayAudio}
                   >
                     <span aria-hidden="true">🔈</span>
                     <span>
-                      {activeWord.audioStatus === 'verified'
+                      {!soundEnabled
+                        ? 'Audio: Disabled in settings'
+                        : activeWord.audioStatus === 'verified'
                         ? 'Play Pronunciation'
                         : 'Audio: Awaiting recording'}
                     </span>

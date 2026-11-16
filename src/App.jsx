@@ -35,6 +35,7 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [targetWordIds, setTargetWordIds] = useState(null);
 
   // Load last lesson on initial mount if available
   useEffect(() => {
@@ -70,6 +71,12 @@ export default function App() {
     setSelectedCategory(category);
     setSelectedLevel(level);
     setActiveCardIndex(cardIndex);
+    setTargetWordIds(null); // Clear custom pool when choosing standard category
+  };
+
+  const handleStudyCustomWords = (wordIds) => {
+    setTargetWordIds(wordIds);
+    setActiveCardIndex(0);
   };
 
   const handleResetProgress = () => {
@@ -77,6 +84,7 @@ export default function App() {
     setSelectedCategory(null);
     setSelectedLevel('beginner');
     setActiveCardIndex(0);
+    setTargetWordIds(null);
   };
 
   const renderScreen = () => {
@@ -100,19 +108,27 @@ export default function App() {
           <FlashcardsScreen
             selectedCategory={selectedCategory}
             selectedLevel={selectedLevel}
+            targetWordIds={targetWordIds}
             cardDirection={cardDirection}
             onUpdateCardDirection={setCardDirection}
+            soundEnabled={soundEnabled}
             initialCardIndex={activeCardIndex}
             onNavigate={setCurrentScreen}
           />
         );
       case 'practice':
-        return <PracticeScreen onNavigate={setCurrentScreen} />;
+        return (
+          <PracticeScreen
+            onNavigate={setCurrentScreen}
+            onStudyWords={handleStudyCustomWords}
+          />
+        );
       case 'progress':
         return (
           <ProgressScreen
             onNavigate={setCurrentScreen}
             onResumeLesson={handleCategorySelect}
+            onStudyWords={handleStudyCustomWords}
           />
         );
       case 'settings':

@@ -27,7 +27,7 @@ describe('App Shell & Navigation', () => {
     fireEvent.click(practiceTab);
 
     expect(screen.getByRole('heading', { name: /Practice & Quizzes/i })).toBeInTheDocument();
-    expect(screen.getByText(/Ready to test yourself\?/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Multiple-Choice Quiz/i })).toBeInTheDocument();
   });
 
   it('navigates to Progress screen when Progress tab is clicked', () => {

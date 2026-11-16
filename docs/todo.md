@@ -33,19 +33,19 @@ Use these checkboxes as the build proceeds. Mark a task done only after its chec
 
 ## Phase 3 — Practice and finish
 
-- [ ] Create multiple-choice quizzes; **check:** one correct answer, plausible unique choices, no invented vocabulary.
-- [ ] Show answer feedback; **check:** correct and incorrect selections are accurately labelled.
-- [ ] Calculate quiz score; **check:** score matches answers given.
-- [ ] Review missed quiz words; **check:** missed entries appear in the review flow.
-- [ ] Complete Progress screen; **check:** totals, category completion, and recent scores are correct after reload.
-- [ ] Add sound and direction settings; **check:** preferences persist after reload.
-- [ ] Add progress reset with confirmation; **check:** Cancel preserves data, Confirm clears learning records.
-- [ ] Explain local-only storage; **check:** users can find the warning and no login is required.
+- [x] Create multiple-choice quizzes; **check:** one correct answer, plausible unique choices, no invented vocabulary.
+- [x] Show answer feedback; **check:** correct and incorrect selections are accurately labelled.
+- [x] Calculate quiz score; **check:** score matches answers given.
+- [x] Review missed quiz words; **check:** missed entries appear in the review flow.
+- [x] Complete Progress screen; **check:** totals, category completion, and recent scores are correct after reload.
+- [x] Add sound and direction settings; **check:** preferences persist after reload.
+- [x] Add progress reset with confirmation; **check:** Cancel preserves data, Confirm clears learning records.
+- [x] Explain local-only storage; **check:** users can find the warning and no login is required.
 - [ ] Validate full 300-word dataset; **check:** counts 150/100/50 and all required fields reviewed.
 - [ ] Verify audio coverage and native-speaker accuracy; **check:** no broken or misleading play controls.
-- [ ] Test phone, tablet, and desktop layouts; **check:** no clipped text, overlapping navigation, or horizontal scroll.
-- [ ] Test keyboard use, labels, focus, and reduced motion; **check:** main flows work without a mouse.
-- [ ] Test fresh browser, returning browser, and cleared storage; **check:** app handles each safely.
-- [ ] Run automated test suite and production build; **check:** both pass without errors.
-- [ ] Perform final PRD acceptance review; **check:** record any remaining gaps before release.
-- [ ] Prepare deployment instructions; **check:** beginner can follow them, but do not deploy without approval.
+- [x] Test phone, tablet, and desktop layouts; **check:** no clipped text, overlapping navigation, or horizontal scroll.
+- [x] Test keyboard use, labels, focus, and reduced motion; **check:** main flows work without a mouse.
+- [x] Test fresh browser, returning browser, and cleared storage; **check:** app handles each safely.
+- [x] Run automated test suite and production build; **check:** both pass without errors.
+- [x] Perform final PRD acceptance review; **check:** record any remaining gaps before release.
+- [x] Prepare deployment instructions; **check:** beginner can follow them, but do not deploy without approval.

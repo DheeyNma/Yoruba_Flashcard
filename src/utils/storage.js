@@ -1,6 +1,6 @@
 /**
  * Storage utility for Kọ́ Yorùbá.
- * Handles ratings, studied words tracking, and last lesson location using localStorage.
+ * Handles ratings, studied words tracking, quiz scores, and settings using localStorage.
  *
  * PRD definitions:
  * - studied = opened/revealed at least once
@@ -14,6 +14,7 @@ const STORAGE_KEYS = {
   LAST_LESSON: 'ko_yoruba_last_lesson',
   CARD_DIRECTION: 'ko_yoruba_card_direction',
   SOUND_ENABLED: 'ko_yoruba_sound_enabled',
+  QUIZ_RESULTS: 'ko_yoruba_quiz_results',
 };
 
 function safeGet(key, fallback) {
@@ -96,7 +97,36 @@ export function saveLastLesson(location) {
 }
 
 /**
- * Calculates learning totals and category completion status.
+ * Saves a quiz attempt result.
+ */
+export function saveQuizResult(result) {
+  if (!result) return;
+  const history = getQuizResults();
+  const entry = {
+    id: `quiz-${Date.now()}`,
+    score: result.score || 0,
+    total: result.total || 0,
+    percentage: result.total > 0 ? Math.round((result.score / result.total) * 100) : 0,
+    category: result.category || 'mixed',
+    level: result.level || 'beginner',
+    missedWordIds: Array.isArray(result.missedWordIds) ? result.missedWordIds : [],
+    timestamp: Date.now(),
+  };
+  history.unshift(entry);
+  // Keep last 20 quiz results
+  safeSet(STORAGE_KEYS.QUIZ_RESULTS, history.slice(0, 20));
+  return entry;
+}
+
+/**
+ * Returns the array of recent quiz results (newest first).
+ */
+export function getQuizResults() {
+  return safeGet(STORAGE_KEYS.QUIZ_RESULTS, []);
+}
+
+/**
+ * Calculates learning totals, category completion, and difficult words.
  */
 export function calculateProgress(vocabularyList) {
   const ratings = getRatings();
@@ -106,6 +136,7 @@ export function calculateProgress(vocabularyList) {
   let wordsStudied = 0;
   let wordsKnown = 0;
   let wordsAgain = 0;
+  const difficultWords = [];
 
   // Track categories: key is `${level}::${category}`
   const categoriesMap = {};
@@ -121,6 +152,7 @@ export function calculateProgress(vocabularyList) {
       wordsKnown += 1;
     } else if (rating === 'again') {
       wordsAgain += 1;
+      difficultWords.push(word);
     }
 
     const key = `${word.level}::${word.category}`;
@@ -150,21 +182,24 @@ export function calculateProgress(vocabularyList) {
   }));
 
   const completedCategoriesCount = categories.filter((c) => c.isCompleted).length;
+  const quizHistory = getQuizResults();
 
   return {
     totalWords,
     wordsStudied,
     wordsKnown,
     wordsAgain,
+    difficultWords,
     categories,
     completedCategoriesCount,
+    quizHistory,
     overallStudiedPercentage: totalWords > 0 ? Math.round((wordsStudied / totalWords) * 100) : 0,
     overallKnownPercentage: totalWords > 0 ? Math.round((wordsKnown / totalWords) * 100) : 0,
   };
 }
 
 /**
- * Clears all learning ratings, studied marks, and last lesson location.
+ * Clears all learning ratings, studied marks, last lesson location, and quiz records.
  */
 export function clearAllLearningProgress() {
   try {
@@ -172,9 +207,9 @@ export function clearAllLearningProgress() {
       window.localStorage.removeItem(STORAGE_KEYS.RATINGS);
       window.localStorage.removeItem(STORAGE_KEYS.STUDIED);
       window.localStorage.removeItem(STORAGE_KEYS.LAST_LESSON);
+      window.localStorage.removeItem(STORAGE_KEYS.QUIZ_RESULTS);
     }
   } catch (err) {
     console.warn('Error clearing learning progress:', err);
   }
 }
-
